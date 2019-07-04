@@ -1,2 +1,18 @@
 ### Starting build.
-# Compilation successful.
+# Target: test.ml.depends, tags: { package(oUnit), extension:ml, file:test.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
+ocamlfind ocamldep -package oUnit -modules test.ml > test.ml.depends
+# Target: ast.ml.depends, tags: { package(oUnit), extension:ml, file:ast.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
+ocamlfind ocamldep -package oUnit -modules ast.ml > ast.ml.depends # cached
+# Target: ast.cmo, tags: { package(oUnit), byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet, traverse, use_menhir }
+ocamlfind ocamlc -c -package oUnit -o ast.cmo ast.ml # cached
+# Target: main.ml.depends, tags: { package(oUnit), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
+ocamlfind ocamldep -package oUnit -modules main.ml > main.ml.depends # cached
+# Target: tiger_parser.mly.depends, tags: { package(oUnit), extension:mly, file:tiger_parser.mly, infer, menhir_ocamldep, ocaml, ocamldep, quiet, traverse, use_menhir }
+menhir --raw-depend --ocamldep 'ocamlfind ocamldep -modules' tiger_parser.mly > tiger_parser.mly.depends
++ menhir --raw-depend --ocamldep 'ocamlfind ocamldep -modules' tiger_parser.mly > tiger_parser.mly.depends
+File "tiger_parser.mly", line 44, characters 4-5:
+Error: two productions that share a semantic action must define exactly
+the same identifiers. Here, "i" is defined
+in one production, but not in all of them.
+Command exited with code 1.
+# Compilation unsuccessful.

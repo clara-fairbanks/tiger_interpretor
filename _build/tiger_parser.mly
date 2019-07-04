@@ -1,3 +1,7 @@
+%{
+open Ast
+%}
+
 %token <string> ID
 %token <string> WHITESPACE
 %token <string> COMMENT
@@ -16,12 +20,12 @@
 %token COMMA
 %token PERIOD
 %token SEMI_COLON
-%token PLUS
-%token MINUS
-%token MULT
-%token DIV
-%token EQUAL
-%token INEQUAL
+%left ADD
+%left MINUS
+%left MULT
+%left DIV
+%token EQ
+%token INEQ
 %token LESS
 %token GREATER
 %token LESS_OR
@@ -29,52 +33,28 @@
 %token AND
 %token OR
 %token EOF
+%start <Ast.expr> prog
+%%
 
 prog:
-  | exp
+  | e = expr; EOF { e }
 
 exp:
   | lvalue
-  |	intlit
-  |	stringlit
-  |	sequence
-  |	negation
-  |	funcall
-  |	infix
-  |	arrCreate
-  |	recCreate
-  |	assign
-  |	ifthenelse
-  |	ifthen
-  |	while
-  |	for
-  |	break
-  |	let
+  |	i = intlit  {Int}
+  |	x = stringlit {String}
+  |	sequence = ( exp *; )
+  |	negation = - exp
+  |	funcall = id ( exp *, )
+  |	assign = lvalue := exp
+  |	ifthenelse = if exp then exp [ else exp ]
+  |	ifthen = if exp then exp
+  |	while_ = while exp do exp
+  |	for_ = for id := exp to exp do exp
+  |	break_
+  |	let_ = let dec+ in exp *; end
 
-sequence	:
-  ( exp *; )
-negation	:
-	 - exp
-funcall	:
-	 	id ( exp *, )
-infix	:
-	 	exp infixop exp
-arrCreate	:
-	 	typid [ exp ] of exp
-recCreate	:
-	 	typid { field *, }
-field	:
-	 	id = exp
-assign	:
-	 	lvalue := exp
-ifthenelse  :
-	 	if exp then exp [ else exp ]
-while	:
-	 	while exp do exp
-for	:
-	 	for id := exp to exp do exp
-let	:
-	 	let dec+ in exp *; end
+
 lvalue	:
 	 	id
     |	subscript
