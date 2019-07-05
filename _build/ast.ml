@@ -1,22 +1,9 @@
-type bop =
-  | ADD
-  | MINUS
-  | MULT
-  | DIV
-  | EQ
-  | INEQ
-  | LESS
-  | GREATER
-  | LESS_OR
-  | GREATER_OR
-  | AND
-  | OR
-
+(* The type of the abstract syntax tree (AST). *)
 type expr =
-  | String of string
+  | Var of string
   | Int of int
-  | Bool of bool
-  | Binop of bop * expr * expr
-  | Let of string * expr * expr
-  | If of expr * expr * expr
-  | ID of string
+  | Add of expr*expr
+  | Sub of expr*expr
+  | Mult of expr*expr
+  | Div of expr*expr
+  | Let of string*expr*expr

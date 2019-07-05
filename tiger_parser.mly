@@ -47,9 +47,13 @@ prog:
 
 exp:
   | lvalue
-  |	i = intlit  {Int}
-  |	x = stringlit {String}
-  |	sequence = ( exp *; )
+  |	i = INTLIT {Int i}
+  |	x = STRINGLIT {String}
+  | e1 = expr; PLUS; e2 = expr { Add(e1,e2) }
+  | e1 = expr; MINUS; e2 = expr { Sub(e1,e2) }
+  | e1 = expr; MULT; e2 = expr { Mult(e1,e2) }
+	| e1 = expr; DIV; e2 = expr { Div(e1,e2) }
+  /* |	sequence = ( exp *; )
   |	negation = - exp
   |	funcall = id ( exp *, )
   |	assign = lvalue := exp
@@ -58,9 +62,9 @@ exp:
   |	while_ = while exp do exp
   |	for_ = for id := exp to exp do exp
   |	break_
-  |	let_ = let dec+ in exp *; end
+  |	let_ = let dec+ in exp *; end */
 
-
+/*
 lvalue	:
 	 	id
     |	subscript
@@ -89,4 +93,4 @@ fieldec	:
 vardec	:
 	  	var id [ : typid ] := exp
 fundec	:
-	  	function id ( fielddec *, ) [: typid ] = exp
+	  	function id ( fielddec *, ) [: typid ] = exp */

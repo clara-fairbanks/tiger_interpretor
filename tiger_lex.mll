@@ -1,7 +1,6 @@
 {
-open Parser
+open Tiger_parser
 }
-
 (*  Regular expressions  *)
 
 let int = '-'? ['0'-'9'] ['0'-'9']*
