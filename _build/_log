@@ -1,18 +1,43 @@
 ### Starting build.
 # Target: test.ml.depends, tags: { package(oUnit), extension:ml, file:test.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -modules test.ml > test.ml.depends # cached
+ocamlfind ocamldep -package oUnit -modules test.ml > test.ml.depends
 # Target: ast.ml.depends, tags: { package(oUnit), extension:ml, file:ast.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
 ocamlfind ocamldep -package oUnit -modules ast.ml > ast.ml.depends # cached
 # Target: ast.cmo, tags: { package(oUnit), byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet, traverse, use_menhir }
 ocamlfind ocamlc -c -package oUnit -o ast.cmo ast.ml # cached
 # Target: main.ml.depends, tags: { package(oUnit), extension:ml, file:main.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
-ocamlfind ocamldep -package oUnit -modules main.ml > main.ml.depends # cached
+ocamlfind ocamldep -package oUnit -modules main.ml > main.ml.depends
+# Target: tiger_lex.mll, tags: { package(oUnit), extension:mll, file:tiger_lex.mll, lexer, ocaml, ocamllex, quiet, traverse, use_menhir }
+/Users/clarafairbanks/.opam/ocaml-base-compiler.4.07.1/bin/ocamllex.opt -q tiger_lex.mll # cached
+# Target: tiger_lex.ml.depends, tags: { package(oUnit), extension:ml, file:tiger_lex.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
+ocamlfind ocamldep -package oUnit -modules tiger_lex.ml > tiger_lex.ml.depends # cached
 # Target: tiger_parser.mly.depends, tags: { package(oUnit), extension:mly, file:tiger_parser.mly, infer, menhir_ocamldep, ocaml, ocamldep, quiet, traverse, use_menhir }
-menhir --raw-depend --ocamldep 'ocamlfind ocamldep -modules' tiger_parser.mly > tiger_parser.mly.depends
-+ menhir --raw-depend --ocamldep 'ocamlfind ocamldep -modules' tiger_parser.mly > tiger_parser.mly.depends
-File "tiger_parser.mly", line 50, characters 4-5:
-Error: two productions that share a semantic action must define exactly
-the same identifiers. Here, "i" is defined
-in one production, but not in all of them.
-Command exited with code 1.
-# Compilation unsuccessful.
+menhir --raw-depend --ocamldep 'ocamlfind ocamldep -modules' tiger_parser.mly > tiger_parser.mly.depends # cached
+# Target: tiger_parser.mly, tags: { package(oUnit), byte, compile, extension:ml, extension:mly, file:tiger_parser.ml, file:tiger_parser.mly, infer, menhir, ocaml, parser, quiet, traverse, use_menhir }
+menhir --ocamlc 'ocamlfind ocamlc -package oUnit' --infer tiger_parser.mly # cached
+# Target: tiger_parser.mli.depends, tags: { package(oUnit), extension:mli, file:tiger_parser.mli, ocaml, ocamldep, quiet, traverse, use_menhir }
+ocamlfind ocamldep -package oUnit -modules tiger_parser.mli > tiger_parser.mli.depends # cached
+# Target: tiger_parser.cmi, tags: { package(oUnit), byte, compile, extension:mli, file:tiger_parser.mli, interf, ocaml, quiet, traverse, use_menhir }
+ocamlfind ocamlc -c -package oUnit -o tiger_parser.cmi tiger_parser.mli # cached
+# Target: tiger_lex.cmo, tags: { package(oUnit), byte, compile, extension:cmo, extension:ml, file:tiger_lex.cmo, file:tiger_lex.ml, implem, ocaml, quiet, traverse, use_menhir }
+ocamlfind ocamlc -c -package oUnit -o tiger_lex.cmo tiger_lex.ml # cached
+# Target: main.cmo, tags: { package(oUnit), byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet, traverse, use_menhir }
+ocamlfind ocamlc -c -package oUnit -o main.cmo main.ml
++ ocamlfind ocamlc -c -package oUnit -o main.cmo main.ml
+File "main.ml", line 8, characters 22-353:
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(Mult (_, _)|Div (_, _)|String _|ID _)
+File "main.ml", line 19, characters 30-778:
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(String _|ID _)
+# Target: test.cmo, tags: { package(oUnit), byte, compile, extension:cmo, extension:ml, file:test.cmo, file:test.ml, implem, ocaml, quiet, traverse, use_menhir }
+ocamlfind ocamlc -c -package oUnit -o test.cmo test.ml
+# Target: tiger_parser.ml.depends, tags: { package(oUnit), extension:ml, file:tiger_parser.ml, ocaml, ocamldep, quiet, traverse, use_menhir }
+ocamlfind ocamldep -package oUnit -modules tiger_parser.ml > tiger_parser.ml.depends # cached
+# Target: tiger_parser.cmo, tags: { package(oUnit), byte, compile, extension:cmo, extension:ml, file:tiger_parser.cmo, file:tiger_parser.ml, implem, ocaml, quiet, traverse, use_menhir }
+ocamlfind ocamlc -c -package oUnit -o tiger_parser.cmo tiger_parser.ml # cached
+# Target: test.byte, tags: { package(oUnit), byte, dont_link_with, extension:byte, file:test.byte, link, ocaml, program, quiet, traverse, use_menhir }
+ocamlfind ocamlc -linkpkg -package oUnit ast.cmo tiger_parser.cmo tiger_lex.cmo main.cmo test.cmo -o test.byte
+# Compilation successful.

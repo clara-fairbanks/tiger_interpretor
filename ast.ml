@@ -1,9 +1,11 @@
 (* The type of the abstract syntax tree (AST). *)
 type expr =
-  | Var of string
+  | Lvalue of string
   | Int of int
   | Add of expr*expr
   | Sub of expr*expr
   | Mult of expr*expr
   | Div of expr*expr
+  | String of string
+  | ID of string
   | Let of string*expr*expr

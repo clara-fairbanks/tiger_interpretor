@@ -1,2 +1,1 @@
-tiger_parser.ml: Ast Lexing
 tiger_parser.mli: Ast Lexing

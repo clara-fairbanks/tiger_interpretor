@@ -1,1 +1,1 @@
-main.ml: Ast Lexer Lexing Tiger_parser
+main.ml: Ast Lexing Tiger_lex Tiger_parser

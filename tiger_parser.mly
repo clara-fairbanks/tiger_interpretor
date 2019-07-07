@@ -1,25 +1,38 @@
+/*Tiger defined by :
+http://www.cs.columbia.edu/~sedwards/classes/2002/w4115/tiger.pdf */
+
 %{
 open Ast
 %}
 
+ /* function calls*/
 %token <string> ID
-%token <string> WHITESPACE
-%token <string> COMMENT
-%token <int> INTLIT
-%token <string> STRINGLIT
+/* Built in types */
+%token <int> INT
+%token <string> STRING
+/* reserved words */
+%token LET
+%token IN
+%token NILL
+/* Binary operators */
 %token TRUE
 %token FALSE
-%token NILL
+/* Punctuation */
 %token LEFT_BRACE
 %token RIGHT_BRACE
 %token LEFT_BRACK
 %token RIGHT_BRACK
-%token LEFT_PAR
-%token RIGHT_PAR
+%token LPAR
+%token RPAR
 %token COLON
 %token COMMA
 %token PERIOD
 %token SEMI_COLON
+/* assignment expression lvalue := expr
+evaluates the expression then binds its
+value to the contents of the lvalue*/
+%token EQUALS
+/* Binary operators: */
 %token ADD
 %token MINUS
 %token MULT
@@ -32,8 +45,9 @@ open Ast
 %token GREATER_OR
 %token AND
 %token OR
+/*end of file*/
 %token EOF
-
+/* Left applied opperators */
 %left ADD
 %left MINUS
 %left MULT
@@ -45,14 +59,18 @@ open Ast
 prog:
   | e = expr; EOF { e }
 
-exp:
-  | lvalue
-  |	i = INTLIT {Int i}
-  |	x = STRINGLIT {String}
-  | e1 = expr; PLUS; e2 = expr { Add(e1,e2) }
+expr:
+  /* | lvalue */
+  |	i = INT {Int i}
+  | x = ID { Lvalue x }
+  |	str = STRING { String str}
+  | e1 = expr; ADD; e2 = expr { Add(e1,e2) }
   | e1 = expr; MINUS; e2 = expr { Sub(e1,e2) }
   | e1 = expr; MULT; e2 = expr { Mult(e1,e2) }
 	| e1 = expr; DIV; e2 = expr { Div(e1,e2) }
+  | LET; x = ID; EQUALS; e1 = expr; IN; e2 = expr { Let( x, e1, e2 ) }
+	| LPAR; e = expr; RPAR {e}
+	;
   /* |	sequence = ( exp *; )
   |	negation = - exp
   |	funcall = id ( exp *, )
