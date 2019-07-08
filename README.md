@@ -8,3 +8,5 @@ The interpreter will be built upon a lexer which will transform the input langua
 From there, my interpreter will create a table of symbols using the generated abstract syntax tree using the map function in the ocaml stl.  The interpreter will perform basic type checking for the program, and execute the program.   
 
 The initial phase implements a simple calculator, interpreting the mathematical expressions provided to the parser.
+
+To run, make the program, assure that the tests perform as expected, and execute functions from the top level.
