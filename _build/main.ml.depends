@@ -1,1 +1,0 @@
-main.ml: Ast Lexing Tiger_lex Tiger_parser

@@ -7,9 +7,11 @@ let is_value : expr -> bool = function
 
 let rec subst e v x = match e with
   | Lvalue y      -> if x=y then v else e
-  | Int n      -> Int n
-  | Add(el,er) -> Add(subst el v x, subst er v x)
-  | Sub(el,er) -> Sub(subst el v x, subst er v x)
+  | Int n         -> Int n
+  | Add(el,er)    -> Add(subst el v x, subst er v x)
+  | Sub(el,er)    -> Sub(subst el v x, subst er v x)
+  | Mult(el,er)   -> Mult(subst el v x, subst er v x)
+  | Div(el,er)    -> Div(subst el v x, subst er v x)
   | Let(y,ebind,ebody) ->
       let ebind' = subst ebind v x in
       if x=y
@@ -47,5 +49,5 @@ let get_value = function
   | Int i -> i
   | _ -> failwith "No value"
 
-let interpret (e:string) : int =
+let interp (e:string) : int =
     e |> parse |> eval |> get_value
