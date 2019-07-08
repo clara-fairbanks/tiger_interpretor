@@ -36,7 +36,7 @@ let rec step : expr -> expr = function
   | Let(x, Int n, e2)   -> subst e2 (Int n) x
   | Let(x, e1, e2)      -> Let (x, step e1, e2)
 
-let rec eval : expr -> expr = fun e ->
+let rec eval e =
     if is_value e then e
     else eval (step e)
 
@@ -49,5 +49,9 @@ let get_value = function
   | Int i -> i
   | _ -> failwith "No value"
 
-let interp (e:string) : int =
+let interpr (e:string) : int =
     e |> parse |> eval |> get_value
+
+let rec print_expr = function
+  | x::t -> print_string (string_of_format x); print_expr t
+  | [] -> ()

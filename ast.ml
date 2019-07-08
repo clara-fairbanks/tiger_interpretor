@@ -2,6 +2,7 @@
 type expr =
   | Lvalue of string
   | Int of int
+  | Bool of bool
   | Add of expr*expr
   | Sub of expr*expr
   | Mult of expr*expr
