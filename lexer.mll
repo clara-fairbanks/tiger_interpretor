@@ -1,5 +1,5 @@
 {
-open Tiger_parser
+open Parser
 }
 (*  Regular expressions  *)
 

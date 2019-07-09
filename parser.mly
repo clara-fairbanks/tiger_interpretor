@@ -64,10 +64,10 @@ expr:
   |	i = INT {Int i}
   | x = ID { Lvalue x }
   |	str = STRING { String str}
-  | e1 = expr; ADD; e2 = expr { Add(e1,e2) }
-  | e1 = expr; MINUS; e2 = expr { Sub(e1,e2) }
-  | e1 = expr; MULT; e2 = expr { Mult(e1,e2) }
-	| e1 = expr; DIV; e2 = expr { Div(e1,e2) }
+  | e1 = expr; ADD; e2 = expr { Binop( Add, e1, e2 ) }
+  | e1 = expr; MINUS; e2 = expr { Binop( Sub, e1, e2 ) }
+  | e1 = expr; MULT; e2 = expr { Binop( Mult, e1, e2 ) }
+	| e1 = expr; DIV; e2 = expr { Binop( Div, e1, e2 ) }
   | LET; x = ID; EQUALS; e1 = expr; IN; e2 = expr { Let( x, e1, e2 ) }
 	| LPAR; e = expr; RPAR {e}
 	;
